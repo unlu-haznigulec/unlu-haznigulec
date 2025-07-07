@@ -1,0 +1,29 @@
+name: Validate PR Source Branch
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate source branch rules
+        run: |
+          echo "🔍 HEAD: ${{ github.head_ref }}"
+          echo "🎯 BASE: ${{ github.base_ref }}"
+
+          BASE="${{ github.base_ref }}"
+          HEAD="${{ github.head_ref }}"
+
+          if [[ "$BASE" == release/* && "$HEAD" != "dev" ]]; then
+            echo "::error::❌ Only 'dev' is allowed to open PRs to 'release/*'"
+            exit 1
+          fi
+
+          if [[ "$BASE" == "main" && "$HEAD" != release/* && "$HEAD" != hotfix/* ]]; then
+            echo "::error::❌ Only 'release/*' or 'hotfix/*' can open PRs to 'main'"
+            exit 1
+          fi
+
+          echo "✅ PR source is allowed."
