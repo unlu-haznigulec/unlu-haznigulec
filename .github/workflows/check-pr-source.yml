@@ -16,13 +16,13 @@ jobs:
           BASE="${{ github.base_ref }}"
           HEAD="${{ github.head_ref }}"
 
-          if [[ "$BASE" == release/* && "$HEAD" != "dev" ]]; then
-            echo "::error::❌ Only 'dev' is allowed to open PRs to 'release/*'"
+          if [[ "$BASE" == release && "$HEAD" != "dev" ]]; then
+            echo "::error::❌ Only 'dev' is allowed to open PRs to 'release'"
             exit 1
           fi
 
-          if [[ "$BASE" == "main" && "$HEAD" != release/* && "$HEAD" != hotfix/* ]]; then
-            echo "::error::❌ Only 'release/*' or 'hotfix/*' can open PRs to 'main'"
+          if [[ "$BASE" == "main" && "$HEAD" != release && "$HEAD" != hotfix ]]; then
+            echo "::error::❌ Only 'release/*' or 'hotfix' can open PRs to 'main'"
             exit 1
           fi
 
