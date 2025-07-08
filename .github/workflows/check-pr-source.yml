@@ -45,7 +45,7 @@ jobs:
 
       - name: Auto-create PRs for downstream branches
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
           SRC=${{ steps.source_branch.outputs.branch }}
           echo "🔁 PR was merged from: $SRC"
