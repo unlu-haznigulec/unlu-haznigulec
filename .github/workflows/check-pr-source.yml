@@ -17,7 +17,7 @@ jobs:
           BASE="${{ github.base_ref }}"
           HEAD="${{ github.head_ref }}"
 
-          if [[ "$BASE" == "release" && "$HEAD" != "dev" ]]; then
+          if [[ "$BASE" == "release" && "$HEAD" != "dev" && "$GITHUB_ACTOR" != "github-actions[bot]"]]; then
             echo "::error::❌ Only 'dev' is allowed to open PRs to 'release'"
             exit 1
           fi
