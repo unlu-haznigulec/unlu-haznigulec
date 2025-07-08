@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate-branch:
-    if: github.event.action != 'closed'
+    if: github.event.action != 'closed' && github.actor != 'github-actions'
     runs-on: ubuntu-latest
     steps:
       - name: Validate source branch rules
