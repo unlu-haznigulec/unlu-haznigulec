@@ -1,11 +1,12 @@
-name: Validate PR Source Branch
+name: PR Validation and Auto-Propagate
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened, closed]
 
 jobs:
   validate-branch:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
       - name: Validate source branch rules
@@ -16,14 +17,46 @@ jobs:
           BASE="${{ github.base_ref }}"
           HEAD="${{ github.head_ref }}"
 
-          if [[ "$BASE" == release && "$HEAD" != "dev" ]]; then
+          if [[ "$BASE" == "release" && "$HEAD" != "dev" ]]; then
             echo "::error::❌ Only 'dev' is allowed to open PRs to 'release'"
             exit 1
           fi
 
-          if [[ "$BASE" == "main" && "$HEAD" != release && "$HEAD" != hotfix ]]; then
-            echo "::error::❌ Only 'release/*' or 'hotfix' can open PRs to 'main'"
+          if [[ "$BASE" == "main" && "$HEAD" != "release" && "$HEAD" != "hotfix" ]]; then
+            echo "::error::❌ Only 'release' or 'hotfix' can open PRs to 'main'"
             exit 1
           fi
 
           echo "✅ PR source is allowed."
+
+  propagate-branches:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Extract source branch name
+        id: source_branch
+        run: echo "branch=${{ github.event.pull_request.head.ref }}" >> $GITHUB_OUTPUT
+
+      - name: Auto-create PRs for downstream branches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          SRC=${{ steps.source_branch.outputs.branch }}
+          echo "🔁 PR was merged from: $SRC"
+
+          if [[ "$SRC" == hotfix/* ]]; then
+            echo "📌 hotfix merged to main, opening PRs to dev & release..."
+            gh pr create --base dev --head main --title "🔄 Sync: main → dev (from $SRC)" --body "Automated PR after hotfix merge to main"
+            gh pr create --base release --head main --title "🔄 Sync: main → release (from $SRC)" --body "Automated PR after hotfix merge to main"
+          elif [[ "$SRC" == release/* ]]; then
+            echo "📌 release merged to main, opening PRs to dev & hotfix..."
+            gh pr create --base dev --head main --title "🔄 Sync: main → dev (from $SRC)" --body "Automated PR after release merge to main"
+            gh pr create --base hotfix --head main --title "🔄 Sync: main → hotfix (from $SRC)" --body "Automated PR after release merge to main"
+          else
+            echo "ℹ️ No matching pattern for source branch. Skipping PR propagation."
