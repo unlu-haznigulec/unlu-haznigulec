@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate-branch:
-    if: github.event.action != 'closed' && github.actor != 'github-actions'
+    if: github.event.action != 'closed' && github.event.pull_request.user.login != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Validate source branch rules
