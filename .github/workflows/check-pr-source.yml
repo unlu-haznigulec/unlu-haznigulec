@@ -50,13 +50,14 @@ jobs:
           SRC=${{ steps.source_branch.outputs.branch }}
           echo "🔁 PR was merged from: $SRC"
 
-          if [[ "$SRC" == hotfix ]]; then
+          if [[ "$SRC" == hotfix/* ]]; then
             echo "📌 hotfix merged to main, opening PRs to dev & release..."
             gh pr create --base dev --head main --title "🔄 Sync: main → dev (from $SRC)" --body "Automated PR after hotfix merge to main"
             gh pr create --base release --head main --title "🔄 Sync: main → release (from $SRC)" --body "Automated PR after hotfix merge to main"
-          elif [[ "$SRC" == release ]]; then
+          elif [[ "$SRC" == release/* ]]; then
             echo "📌 release merged to main, opening PRs to dev & hotfix..."
             gh pr create --base dev --head main --title "🔄 Sync: main → dev (from $SRC)" --body "Automated PR after release merge to main"
             gh pr create --base hotfix --head main --title "🔄 Sync: main → hotfix (from $SRC)" --body "Automated PR after release merge to main"
           else
             echo "ℹ️ No matching pattern for source branch. Skipping PR propagation."
+          fi
