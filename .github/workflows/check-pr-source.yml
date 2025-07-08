@@ -87,13 +87,17 @@ jobs:
 
           if [[ "$SRC" == "hotfix" ]]; then
             echo "📌 hotfix merged to main, syncing to dev & release..."
-            close_existing_pr dev && create_sync_pr dev
-            close_existing_pr release && create_sync_pr release
+            close_existing_pr dev
+            create_sync_pr dev
+            close_existing_pr release
+            create_sync_pr release
 
           elif [[ "$SRC" == "release" ]]; then
             echo "📌 release merged to main, syncing to dev & hotfix..."
-            close_existing_pr dev && create_sync_pr dev
-            close_existing_pr hotfix && create_sync_pr hotfix
+            close_existing_pr dev
+            create_sync_pr dev
+            close_existing_pr hotfix
+            create_sync_pr hotfix
 
           else
             echo "ℹ️ No downstream sync rules for source branch '$SRC'."
