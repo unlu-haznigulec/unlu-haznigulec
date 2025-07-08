@@ -60,3 +60,4 @@ jobs:
             gh pr create --base hotfix --head main --title "🔄 Sync: main → hotfix (from $SRC)" --body "Automated PR after release merge to main"
           else
             echo "ℹ️ No matching pattern for source branch. Skipping PR propagation."
+            fi
