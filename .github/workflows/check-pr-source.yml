@@ -6,7 +6,7 @@ on:
 
 jobs:
   validate-branch:
-    if: github.event.action != 'closed' && github.actor != 'github-actions'
+    if: github.event.action != 'closed' && github.event.pull_request.user.login != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Validate source branch rules
@@ -17,7 +17,7 @@ jobs:
           BASE="${{ github.base_ref }}"
           HEAD="${{ github.head_ref }}"
 
-          if [[ "$BASE" == "release" && "$HEAD" != "dev" ]]; then
+          if [[ "$BASE" == "release" && "$HEAD" != "dev" && "$GITHUB_ACTOR" != "github-actions[bot]" ]]; then
             echo "::error::❌ Only 'dev' is allowed to open PRs to 'release'"
             exit 1
           fi
