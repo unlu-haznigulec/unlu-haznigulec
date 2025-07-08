@@ -6,21 +6,31 @@ on:
 
 jobs:
   validate-branch:
-    if: github.event.action != 'closed' && github.event.pull_request.user.login != 'github-actions[bot]'
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     steps:
+      - name: Skip if PR has auto-sync label
+        id: skip-check
+        run: |
+          echo "🔍 Checking PR labels..."
+          labels=$(echo '${{ toJson(github.event.pull_request.labels) }}' | jq -r '.[].name')
+          for label in $labels; do
+            if [[ "$label" == "auto-sync" ]]; then
+              echo "skip=true" >> $GITHUB_OUTPUT
+              echo "✅ auto-sync label found. Skipping validation."
+              exit 0
+            fi
+          done
+          echo "skip=false" >> $GITHUB_OUTPUT
+
       - name: Validate source branch rules
+        if: steps.skip-check.outputs.skip == 'false'
         run: |
           echo "🔍 HEAD: ${{ github.head_ref }}"
           echo "🎯 BASE: ${{ github.base_ref }}"
 
           BASE="${{ github.base_ref }}"
           HEAD="${{ github.head_ref }}"
-
-          if [[ "$ACTOR" == "github-actions" || "$ACTOR" == "github-actions[bot]" ]]; then
-            echo "🤖 Bot PR detected, skipping validation."
-            exit 0
-          fi
 
           if [[ "$BASE" == "release" && "$HEAD" != "dev" ]]; then
             echo "::error::❌ Only 'dev' is allowed to open PRs to 'release'"
@@ -71,7 +81,8 @@ jobs:
             echo "📤 Creating PR: main → $BASE"
             gh pr create --base "$BASE" --head main \
               --title "🔄 Sync: main → $BASE (from $SRC)" \
-              --body "Automated PR after $SRC merged to main"
+              --body "Automated PR after $SRC merged to main" \
+              --label "auto-sync"
           }
 
           if [[ "$SRC" == "hotfix" ]]; then
@@ -86,4 +97,3 @@ jobs:
 
           else
             echo "ℹ️ No downstream sync rules for source branch '$SRC'."
-          fi
