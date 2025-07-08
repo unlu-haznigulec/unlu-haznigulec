@@ -97,3 +97,4 @@ jobs:
 
           else
             echo "ℹ️ No downstream sync rules for source branch '$SRC'."
+          fi
