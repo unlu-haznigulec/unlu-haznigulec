@@ -1,0 +1,44 @@
+name: QA Build & Distribute
+
+on:
+  push:
+    branches:
+      - release
+
+jobs:
+  build-and-distribute:
+    runs-on: macos-latest  # iOS için şart
+    environment: qa
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.22.0'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Build iOS (QA)
+        run: flutter build ipa --flavor qa --release
+
+      - name: Build Android (QA)
+        run: flutter build appbundle --flavor qa --release
+
+      - name: Distribute to Firebase App Distribution (Android)
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_QA }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: qa-testers
+          file: build/app/outputs/bundle/qaRelease/app-qa-release.aab
+
+      - name: Upload to TestFlight (iOS)
+        uses: apple-actions/upload-testflight-build@v1
+        with:
+          app-path: build/ios/ipa/*.ipa
+          api-key-id: ${{ secrets.APPSTORE_API_KEY_ID }}
+          api-private-key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
+          issuer-id: ${{ secrets.APPSTORE_ISSUER_ID }}
