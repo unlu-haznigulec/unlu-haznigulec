@@ -51,7 +51,7 @@ jobs:
       - name: 🏗️ Build Android (QA)
         run: flutter build apk --flavor qa --release --target lib/main_qa.dart --no-tree-shake-icons
         env:
-          MYAPP_UPLOAD_STORE_FILE: ../matriksmobile.keystore
+          MYAPP_UPLOAD_STORE_FILE: matriksmobile.keystore
           MYAPP_UPLOAD_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           MYAPP_UPLOAD_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           MYAPP_UPLOAD_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
