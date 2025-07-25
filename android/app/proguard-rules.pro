@@ -18,13 +18,26 @@
 -keep interface org.bouncycastle.**
 
 -keep class com.fasterxml.jackson.** { *; }
-
+# Adjust SDK
+-keep class com.adjust.sdk.** { *; }
+-dontwarn com.adjust.sdk.**
 -dontwarn javax.naming.**
 -dontwarn org.bouncycastle.**
 -dontwarn org.conscrypt.**
 -dontwarn org.openjsse.**
 -dontwarn org.w3c.dom.bootstrap.**
-
+-dontwarn com.google.android.play.**
+-dontwarn com.google.android.play.core.splitcompat.SplitCompatApplication
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallException
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallManager
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallManagerFactory
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallRequest$Builder
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallRequest
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallSessionState
+-dontwarn com.google.android.play.core.splitinstall.SplitInstallStateUpdatedListener
+-dontwarn com.google.android.play.core.tasks.OnFailureListener
+-dontwarn com.google.android.play.core.tasks.OnSuccessListener
+-dontwarn com.google.android.play.core.tasks.Task
 
 -keep public class com.smartvist.idverify.* { public *;}
 -keep public class com.smartvist.idverify.** {public *;}
