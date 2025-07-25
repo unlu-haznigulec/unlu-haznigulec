@@ -24,10 +24,6 @@ jobs:
       id-token: write
 
     steps:
-      - name: 📝 Create local.properties
-        run: |
-          echo "keyAlias=${{ secrets.KEY_ALIAS }}" >> android/key.properties
-
       - name: 📥 Checkout
         uses: actions/checkout@v4
 
@@ -47,10 +43,6 @@ jobs:
 
       - name: 📦 Create Routes
         run: flutter pub run build_runner build --delete-conflicting-outputs
-
-      - name: Decode keystore
-        run: |
-          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/matriksmobile.keystore
 
       - name: Decode keystore
         run: |
