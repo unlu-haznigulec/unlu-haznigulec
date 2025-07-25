@@ -1,24 +1,81 @@
-# 💫 About Me:
-🔭 I’m currently working on UNLU&CO<br>
+# piapiri_v2
 
 
-## 🌐 Socials:
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://linkedin.com/in/https://www.linkedin.com/in/haznigulec) 
+## IOS Crashes
+Window -> Organizer -> Crashes
 
-# 💻 Tech Stack:
-![Kotlin](https://img.shields.io/badge/kotlin-%237F52FF.svg?style=for-the-badge&logo=kotlin&logoColor=white) ![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54) ![Swift](https://img.shields.io/badge/swift-F54A2A?style=for-the-badge&logo=swift&logoColor=white) ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase) ![Flutter](https://img.shields.io/badge/Flutter-%2302569B.svg?style=for-the-badge&logo=Flutter&logoColor=white) ![Flask](https://img.shields.io/badge/flask-%23000.svg?style=for-the-badge&logo=flask&logoColor=white) ![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi) ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) ![MySQL](https://img.shields.io/badge/mysql-%2300000f.svg?style=for-the-badge&logo=mysql&logoColor=white) ![Firebase](https://img.shields.io/badge/Firebase-039BE5?style=for-the-badge&logo=Firebase&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-%2307405e.svg?style=for-the-badge&logo=sqlite&logoColor=white) ![Figma](https://img.shields.io/badge/figma-%23F24E1E.svg?style=for-the-badge&logo=figma&logoColor=white) ![Canva](https://img.shields.io/badge/Canva-%2300C4CC.svg?style=for-the-badge&logo=Canva&logoColor=white) ![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white) ![Swagger](https://img.shields.io/badge/-Swagger-%23Clojure?style=for-the-badge&logo=swagger&logoColor=white) ![Raspberry Pi](https://img.shields.io/badge/-RaspberryPi-C51A4A?style=for-the-badge&logo=Raspberry-Pi)
-# 📊 GitHub Stats:
-![](https://github-readme-stats.vercel.app/api?username=unlu-haznigulec&theme=dark&hide_border=false&include_all_commits=true&count_private=true)<br/>
-![](https://github-readme-streak-stats.herokuapp.com/?user=unlu-haznigulec&theme=dark&hide_border=false)<br/>
-![](https://github-readme-stats.vercel.app/api/top-langs/?username=unlu-haznigulec&theme=dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact)
+## Protobuf Install
+To use Protobuf(https://protobuf.dev) we need to install binary of Protobuf first, then we should activate `protoc_plugin`(https://pub.dev/packages/protoc_plugin)
 
-## 🏆 GitHub Trophies
-![](https://github-profile-trophy.vercel.app/?username=unlu-haznigulec&theme=radical&no-frame=true&no-bg=false&margin-w=4)
+* To install Protobuf, please visit the [link](https://protobuf.dev/downloads/) and follow instructions
+* `protoc_plugin` is our code generator. To install, visit [pub page](https://pub.dev/packages/protoc_plugin) and follow instructions.
 
-### 🔝 Top Contributed Repo
-![](https://github-contributor-stats.vercel.app/api?username=unlu-haznigulec&limit=5&theme=dark&combine_all_yearly_contributions=true)
+### Usage
+Before starting to development, create a file named `gen` under `lib/core` and generate our `proto` files with the command below;
+```
+protoc --proto_path=lib/core/proto --dart_out=lib/core/gen lib/core/proto/Symbol/Symbol.proto lib/core/proto/DepthStats/DepthStats.proto lib/core/proto/Derivative/Derivative.proto lib/core/proto/Trade/Trade.proto lib/core/proto/News/news.proto lib/core/proto/DepthTable/DepthTable.proto lib/core/proto/Messenger/Messenger.proto lib/core/proto/Ranker/Ranker.proto lib/core/proto/Timestamp/Timestamp.proto lib/core/proto/ComputedValues/ComputedValues.proto
+```
 
----
-[![](https://visitcount.itsvg.in/api?id=unlu-haznigulec&icon=0&color=0)](https://visitcount.itsvg.in)
+## Development
+After merges, some developers could struggle to work on iOS side. To prevent and handle those errors you can use `prep_ios.sh`.
 
-<!-- Proudly created with GPRM ( https://gprm.itsvg.in ) -->
+Before working with it you may need to give some permissions with:
+```
+chmod +x prep_ios.sh
+```
+
+You can use it like:
+```
+./prep_ios.sh
+```
+
+## AutoRoute
+AutoRoute is our routing solution. To build project you need to create routes wit following command;
+```
+flutter packages pub run build_runner build
+```
+
+After that you can start development.
+
+## Firebase CLI
+To use firebase we need to active `firebase_cli` globally with given line:
+
+```
+dart pub global activate flutterfire_cli 1.0.1-dev.4
+```
+
+## Relese
+To release app, we need to use `app_build.sh`. With the file, we can build package for both Android and iOS. Before using it you may need to give some permissions to the file with:
+
+```
+chmod +x app_build.sh
+```
+
+After giving permissions you need to specify entry point.
+You can get help by executing `./app_build.sh --help`
+
+Create AAB and IPA for the app
+
+usage: ./app_build.sh --env string --target string
+
+  --env string            env to which to deploy
+                          default: prod
+                          options: dev | qa | prod
+  --target string         target operating system
+                          default: both
+                          options: ios | android
+
+### Usage
+#### Production
+
+```
+./app_build.sh lib/main_prod.dart
+```
+
+#### Test Flight
+
+```
+./app_build.sh qa
+```
+
+
