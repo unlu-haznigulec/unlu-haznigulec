@@ -78,4 +78,4 @@ usage: ./app_build.sh --env string --target string
 ./app_build.sh qa
 ```
 
-s
+
