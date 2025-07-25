@@ -65,6 +65,10 @@ android {
             def keyAlias = System.getenv("MYAPP_UPLOAD_KEY_ALIAS")
             def keyPassword = System.getenv("MYAPP_UPLOAD_KEY_PASSWORD")
             if (storeFilePath != null) {
+                println(keyAlias)
+                println(keyPassword)
+                println(storeFilePath)
+                println(storePassword)
                 keyAlias keyAlias
                 keyPassword keyPassword
                 storeFile storeFilePath
