@@ -117,6 +117,7 @@ flutter {
 }
 
 dependencies {
+    implementation 'com.google.android.play:app-update:2.1.0'
     implementation 'com.adjust.sdk:adjust-android:4.33.4'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'com.android.support:multidex:1.0.3'
