@@ -18,7 +18,9 @@
 -keep interface org.bouncycastle.**
 
 -keep class com.fasterxml.jackson.** { *; }
-
+# Adjust SDK
+-keep class com.adjust.sdk.** { *; }
+-dontwarn com.adjust.sdk.**
 -dontwarn javax.naming.**
 -dontwarn org.bouncycastle.**
 -dontwarn org.conscrypt.**
