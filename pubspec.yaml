@@ -30,7 +30,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   android_id: 0.4.0
-  adjust_sdk: 4.31.0
+  adjust_sdk: 5.4.1
   auto_route: 9.2.2
   auto_size_text: 3.0.0
   bloc: 8.1.4
