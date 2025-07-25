@@ -44,8 +44,17 @@ jobs:
       - name: 📦 Create Routes
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
+      - name: Decode keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/matriksmobile.keystore
+
       - name: 🏗️ Build Android (QA)
         run: flutter build apk --flavor qa --release --target lib/main_qa.dart --no-tree-shake-icons
+        env:
+          MYAPP_UPLOAD_STORE_FILE: matriksmobile.keystore
+          MYAPP_UPLOAD_STORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          MYAPP_UPLOAD_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          MYAPP_UPLOAD_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
 
       - name: 🏗️ Build iOS (QA)
         run: flutter build ipa --flavor qa --release --target lib/main_qa.dart
