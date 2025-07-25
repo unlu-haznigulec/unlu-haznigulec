@@ -1,7 +1,7 @@
+import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:design_system/common/widgets/divider.dart';
 import 'package:design_system/foundations/spacing/grid.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:piapiri_v2/app/notifications/bloc/notifications_bloc.dart';
 import 'package:piapiri_v2/app/notifications/bloc/notifications_event.dart';
 import 'package:piapiri_v2/common/utils/date_time_utils.dart';
@@ -118,7 +118,7 @@ class _NotificationCenterCardState extends State<NotificationCenterCard> {
       _notificationsBloc.add(
         NotificationGetCategories(
           callback: (notification) async {
-            FlutterAppBadger.updateBadgeCount(
+            AppBadgePlus.updateBadge(
               notification.count,
             );
           },
