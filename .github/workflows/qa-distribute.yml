@@ -4,21 +4,21 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - qa
+      - release
   pull_request:
     types: [opened]
     branches:
-      - qa
+      - release
     
 jobs:
   qa-distribute:
     if: >
-      github.event.pull_request.base.ref == 'qa'
+      github.event.pull_request.base.ref == 'release'
     #  github.event.pull_request.merged == true &&
     # &&
     #  github.event.pull_request.head.ref == 'dev'
     runs-on: macos-latest
-    environment: qa
+    environment: release
     permissions:
       contents: read
       id-token: write
