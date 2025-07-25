@@ -79,4 +79,4 @@ usage: ./app_build.sh --env string --target string
 ```
 
 
-s
+ss
