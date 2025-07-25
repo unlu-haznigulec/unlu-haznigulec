@@ -1,0 +1,31 @@
+class IncomeConstants {
+  static const incomeList = [
+    '101',
+    '102',
+    '103',
+    '104',
+    '105',
+    '106',
+    '107',
+    '108',
+    '109',
+    '110',
+    '111',
+    'LDF',
+    'NDF',
+    'NFK',
+    'OBI',
+    'OZA',
+    'PPK',
+    'PVK',
+    'SFV',
+    'SKR',
+    'TDF',
+    'TFG',
+    'TOK',
+    'TVK',
+    'UDD',
+    'UDK',
+    'VHS'
+  ];
+}

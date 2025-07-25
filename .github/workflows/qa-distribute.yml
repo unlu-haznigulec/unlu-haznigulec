@@ -1,41 +1,64 @@
-name: QA Build & Distribute
+name: QA Distribute on Release Merge
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - release
-
+      - qa
+  pull_request:
+    types: [opened]
+    branches:
+      - qa
+    
 jobs:
-  build-and-distribute:
-    runs-on: macos-latest  # iOS için şart
+  qa-distribute:
+    if: >
+      github.event.pull_request.base.ref == 'qa'
+    #  github.event.pull_request.merged == true &&
+    # &&
+    #  github.event.pull_request.head.ref == 'dev'
+    runs-on: macos-latest
     environment: qa
+    permissions:
+      contents: read
+      id-token: write
+
     steps:
-      - name: Checkout code
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      - name: Set up Java 21
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: 🛠️ Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          flutter-version: "3.27.0"
 
-      - name: Install dependencies
+      - name: 📦 Install dependencies
         run: flutter pub get
 
-      - name: Build iOS (QA)
-        run: flutter build ipa --flavor qa --release
+      - name: 📦 Create Routes
+        run: flutter pub run build_runner build --delete-conflicting-outputs
 
-      - name: Build Android (QA)
-        run: flutter build appbundle --flavor qa --release
+      - name: 🏗️ Build Android (QA)
+        run: flutter build apk --flavor qa --release --target lib/main_qa.dart --no-tree-shake-icons
 
-      - name: Distribute to Firebase App Distribution (Android)
+      - name: 🏗️ Build iOS (QA)
+        run: flutter build ipa --flavor qa --release --target lib/main_qa.dart
+
+      - name: 🚀 Distribute to Firebase App Distribution (Android)
         uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{ secrets.FIREBASE_APP_ID_QA }}
           token: ${{ secrets.FIREBASE_TOKEN }}
-          groups: qa-testers
-          file: build/app/outputs/bundle/qaRelease/app-qa-release.aab
+          groups: Ünlü Tester
+          file: build/app/outputs/flutter-apk/qaRelease/app-qa-release.apk
 
-      - name: Upload to TestFlight (iOS)
+      - name: 🍏 Upload to TestFlight (iOS)
         uses: apple-actions/upload-testflight-build@v1
         with:
           app-path: build/ios/ipa/*.ipa
