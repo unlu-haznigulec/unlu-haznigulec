@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-import 'package:adjust_sdk/adjust.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/components/scroll/p_scroll_behavior.dart';
 import 'package:design_system/utils/app_theme.dart';
@@ -108,7 +107,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       case AppLifecycleState.inactive:
         break;
       case AppLifecycleState.resumed:
-        Adjust.onResume();
         getIt<TWQueue>().resume();
         getIt<TWQueue>(instanceName: 'MQTT').resume();
         ensureUsSymbolManagerInitialized();
@@ -126,7 +124,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         getIt<MqttWarrantRTStatsController>().reSubscribeSymbols();
         break;
       case AppLifecycleState.paused:
-        Adjust.onPause();
         getIt<TWQueue>().pause();
         getIt<TWQueue>(instanceName: 'MQTT').pause();
         if (getIt.isRegistered<UsSymbolManager>()) {

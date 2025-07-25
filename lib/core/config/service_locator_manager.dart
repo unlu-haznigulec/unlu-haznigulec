@@ -42,7 +42,7 @@ class ServiceLocatorManager {
     );
 
     adjustConfig.logLevel = AdjustLogLevel.debug;
-    adjustConfig.sendInBackground = true;
+    adjustConfig.isSendingInBackgroundEnabled = true;
     UserModel(
       phone: '',
       address: '',
@@ -57,7 +57,7 @@ class ServiceLocatorManager {
       customerChannel: '',
     );
 
-    Adjust.start(adjustConfig);
+    Adjust.initSdk(adjustConfig);
 
     final dir = await path.getApplicationDocumentsDirectory();
     Hive.init(dir.path);

@@ -1,3 +1,4 @@
+import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system/common/widgets/divider.dart';
 import 'package:design_system/components/button/button.dart';
@@ -5,7 +6,6 @@ import 'package:design_system/components/place_holder/no_data_widget.dart';
 import 'package:design_system/components/sheet/p_bottom_sheet.dart';
 import 'package:design_system/foundations/spacing/grid.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_app_badger/flutter_app_badger.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:piapiri_v2/app/auth/bloc/auth_bloc.dart';
@@ -384,7 +384,7 @@ class _NotificationPageState extends State<NotificationPage> {
         categoryId: _selectedNotificationCategoryId,
         notificationId: const [0],
         callback: () async {
-          FlutterAppBadger.removeBadge();
+          AppBadgePlus.updateBadge(0);
 
           /// Uygulamanın üzerinde badge numarasını sıfırlar.
           _readCount(_selectedNotificationCategoryId);
@@ -403,7 +403,7 @@ class _NotificationPageState extends State<NotificationPage> {
         categoryId: _selectedNotificationCategoryId,
         notificationId: const [0],
         callback: () async {
-          FlutterAppBadger.removeBadge();
+          AppBadgePlus.updateBadge(0);
           _readCount(_selectedNotificationCategoryId);
           _pagingController.itemList?.clear();
           setState(() {});

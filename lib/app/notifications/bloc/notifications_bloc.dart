@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_app_badger/flutter_app_badger.dart';
+import 'package:app_badge_plus/app_badge_plus.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:piapiri_v2/app/notifications/bloc/notifications_event.dart';
 import 'package:piapiri_v2/app/notifications/bloc/notifications_state.dart';
@@ -52,7 +52,7 @@ class NotificationsBloc extends PBloc<NotificationsState> {
           notificationUnReadCount: response.data['unreadCount'],
         ),
       );
-      FlutterAppBadger.updateBadgeCount(
+      AppBadgePlus.updateBadge(
         response.data['unreadCount'],
       );
     } else {
