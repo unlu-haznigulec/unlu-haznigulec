@@ -49,7 +49,7 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		B8D80F4FA0A2A60916E54B96 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 87678E020700FAFB536567EA /* Pods_Runner.framework */; };
-		C31E67F62D22866C003AE42A /* (null) in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C31E67F62D22866C003AE42A /* BuildFile in Embed Frameworks */ = {isa = PBXBuildFile; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C3FBF6FC2C908AC8009B5DF1 /* _.unluco.com.der in Resources */ = {isa = PBXBuildFile; fileRef = C3FBF6F82C908AC8009B5DF1 /* _.unluco.com.der */; };
 		E13F573B7311CD470469F8D3 /* Pods_InsiderNotificationContent.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 646CB09B0F945A67AA9C7223 /* Pods_InsiderNotificationContent.framework */; };
 		F9E501A32D6B91C800D2A6FB /* PPEnQualifyModule.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C35750552D316B8100F572BC /* PPEnQualifyModule.xcframework */; };
@@ -93,7 +93,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F9E501A42D6B91C800D2A6FB /* PPEnQualifyModule.xcframework in Embed Frameworks */,
-				C31E67F62D22866C003AE42A /* (null) in Embed Frameworks */,
+				C31E67F62D22866C003AE42A /* BuildFile in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,7 +146,6 @@
 		297CB5E8E58E768531796F9A /* Pods-Runner.profile-qa.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile-qa.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile-qa.xcconfig"; sourceTree = "<group>"; };
 		2C7CACD2C567BD0C6E677D66 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		315CBC84983B1A7B9D845B4D /* Pods-InsiderNotificationContent.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InsiderNotificationContent.profile.xcconfig"; path = "Target Support Files/Pods-InsiderNotificationContent/Pods-InsiderNotificationContent.profile.xcconfig"; sourceTree = "<group>"; };
-		331C807B294A618700263BE5 /* RunnerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunnerTests.swift; sourceTree = "<group>"; };
 		34FCBB562D9409DB00775750 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
 		34FCBB582D9409E300775750 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
 		34FCBB5A2D9409EA00775750 /* GoogleService-Info-qa.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-qa.plist"; sourceTree = "<group>"; };
@@ -319,14 +318,6 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		331C8082294A63A400263BE5 /* RunnerTests */ = {
-			isa = PBXGroup;
-			children = (
-				331C807B294A618700263BE5 /* RunnerTests.swift */,
-			);
-			path = RunnerTests;
-			sourceTree = "<group>";
-		};
 		96DAB7646425B2D4CC42D098 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,7 +351,6 @@
 				0F1025D12CAD70DE008C8DF2 /* InsiderNotificationContent */,
 				0F1025EE2CAD713C008C8DF2 /* InsiderNotificationService */,
 				97C146EF1CF9000F007C117D /* Products */,
-				331C8082294A63A400263BE5 /* RunnerTests */,
 				184120114592407454073E35 /* Pods */,
 				96DAB7646425B2D4CC42D098 /* Frameworks */,
 			);
@@ -763,7 +753,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = " 
 ";
 		};
 /* End PBXShellScriptBuildPhase section */

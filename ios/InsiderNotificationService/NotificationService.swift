@@ -2,10 +2,11 @@
 //  NotificationService.swift
 //  InsiderNotificationService
 //
-//  Created by Taha on 2.10.2024.
-//
+//  Created by Insider on 17.08.2020.
+//  Copyright © 2020 Insider. All rights reserved.
 
 import UserNotifications
+import InsiderMobileAdvancedNotification
 
 let APP_GROUP = "group.com.unluco.piapiri"
 
@@ -13,10 +14,12 @@ class NotificationService: UNNotificationServiceExtension {
 
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
+    var receivedRequest: UNNotificationRequest?
 
     override func didReceive(_ request: UNNotificationRequest, withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void) {
         self.contentHandler = contentHandler
         bestAttemptContent = (request.content.mutableCopy() as? UNMutableNotificationContent)
+        receivedRequest = request
 
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content here...
@@ -25,7 +28,7 @@ class NotificationService: UNNotificationServiceExtension {
             let goToAppText = "Launch App"
 
             InsiderPushNotification.showInsiderRichPush(
-                request,
+                bestAttemptContent,
                 appGroup: APP_GROUP as String,
                 nextButtonText: nextButtonText,
                 goToAppText: goToAppText,
@@ -46,6 +49,7 @@ class NotificationService: UNNotificationServiceExtension {
         // Called just before the extension will be terminated by the system.
         // Use this as an opportunity to deliver your "best attempt" at modified content, otherwise the original push payload will be used.
         if let contentHandler = contentHandler, let bestAttemptContent =  bestAttemptContent {
+            InsiderPushNotification.serviceExtensionTimeWillExpire(receivedRequest, content: bestAttemptContent)
             contentHandler(bestAttemptContent)
         }
     }
