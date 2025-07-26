@@ -64,17 +64,17 @@ android {
             def envStorePassword = System.getenv("MYAPP_UPLOAD_STORE_PASSWORD")
             def envKeyAlias = System.getenv("MYAPP_UPLOAD_KEY_ALIAS")
             def envKeyPassword = System.getenv("MYAPP_UPLOAD_KEY_PASSWORD")
-            
-            if (envStoreFile && envStorePassword && envKeyAlias && envKeyPassword) {
+
+            if (envStoreFile != null && envStorePassword != null && envKeyAlias != null && envKeyPassword != null) {
                 println "✔️ CI/CD signing bilgileri bulundu."
-            
+
                 storeFile file(envStoreFile)
                 storePassword envStorePassword
                 keyAlias envKeyAlias
                 keyPassword envKeyPassword
             } else {
                 println "⚠️ Local keystore kullanılacak."
-            
+
                 storeFile file(keystoreProperties['storeFile'])
                 storePassword keystoreProperties['storePassword']
                 keyAlias keystoreProperties['keyAlias']
